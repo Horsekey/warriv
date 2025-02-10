@@ -29,6 +29,9 @@ jobs:
       - name: (optional) Twingate logs
         run: journalctl -u twingate
 
+      - name: Checkout repostitory
+        uses: actions/checkout@v4
+
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
@@ -36,11 +39,23 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Connect and deploy
+      - name: Connect and pull new changes
         run: |
           echo sshing to dev bench 🚀
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            mkdir -p /home/deploy/test
+            # Define deployment dir
+            DEPLOY_DIR="/home/deploy/${{ github.actor }}"
+
+            if [ ! -d "$DEPLOY_DIR/.git" ]; then
+              echo "Repository not found, cloning..."
+              # if repo doesn't exist, clone it
+              git clone https://github.com/${{ github.repository }} $DEPLOY_DIR
+            else
+              echo "Repository found, pulling latest changes..."
+              # if the repo exists, pull latest changes
+              cd $DEPLOY_DIR
+              git pull origin ${{ github.ref_name }}
+            fi
           EOF
 
       - run: echo "SUCCESS!!! This job's status is ${{ job.status }}."
