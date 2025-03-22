@@ -289,7 +289,7 @@ async def weakness(
         
         for k, v in mappings.items():
             if monster_lower in v.lower():
-                embed.add_field(name=v.split(' ')[0], value=v, inline=False)
+                embed.add_field(name=v.split(' ')[0], value=f"{k} {v}", inline=False)
                 found = True
                 
         if not found:
