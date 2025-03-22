@@ -58,10 +58,9 @@ jobs:
             fi
 
             cd $DEPLOY_DIR
-            docker-compose down
+            docker-compose down -v
             docker-compose build --no-cache
-            docker compose --env-file .env.dev up -d
-            docker compose --env-file .env.prod up -d
+            docker-compose up -d
             docker system prune --filter "until=24h" -f
           EOF
 
