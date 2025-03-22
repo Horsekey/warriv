@@ -6,7 +6,7 @@ from pymongo import MongoClient
 from typing import Optional
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv('.env.dev')
 
 GUILD_ID = os.getenv('GUILD_ID')
 
@@ -207,7 +207,6 @@ async def interactive_quests(
         
         embed = discord.Embed(
             title=f"Monster Hunter Quests",
-            description="List of available quests from the database",
             color=0x0080ff
         )
         
@@ -215,11 +214,12 @@ async def interactive_quests(
         for quest in page_quests:
             # Format fields as before
             new_badge = "🆕  " if quest.get("is_new", False) else ""
-            title = f"{new_badge}{quest.get('title')} ({quest.get('difficulty')})"
+            title = f"{new_badge}{quest.get('title')} ({quest.get('difficulty')})\n\u200B"
             value = (
-                f"\n\n**Location:** {quest.get('locale', 'Unknown')}\n\n"
-                f"**Objective:** {quest.get('completion_conditions', 'Unknown')}\n\n"
+                f"**Location:** {quest.get('locale', 'Unknown')}\n"
+                f"**Objective:** {quest.get('completion_conditions', 'Unknown')}\n"
                 f"**Available:** {quest.get('start_datetime', 'Unknown')} to {quest.get('end_datetime', 'Unknown')}\n"
+                f"**Description:** {quest.get('description', 'Unknown')}\n\u200B"
             )
             embed.add_field(name=title, value=value, inline=False)
 
