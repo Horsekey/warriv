@@ -6,7 +6,7 @@ services:
     build:
       context: .
       args:
-        - NODE_ENV=${NODE_ENV}
+        - BOT_ENV=${ENVIRONMENT}
     env_file:
       - ${ENV_FILE}
     extra_hosts:
