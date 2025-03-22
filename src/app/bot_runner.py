@@ -1,4 +1,5 @@
 import os
+import json
 import discord
 from discord.ui import View, Button
 from discord.ext import commands
@@ -140,18 +141,19 @@ class PaginationView(View):
             
         self.current_page -= 1
         self.update_buttons()
-
         embed = self.pages[self.current_page]
-        image_path = self.image_files[self.current_page]
 
-        if image_path:
+        # Testing to see if there are files for this page
+        if self.current_page < len(self.image_files) and self.image_files[self.current_page]:
+            image_path = self.image_files[self.current_page]
             file = discord.File(image_path, filename=os.path.basename(image_path))
             embed.set_image(url=f"attachment://{os.path.basename(image_path)}")
             await interaction.response.edit_message(embed=embed, view=self, attachments=[file])
         else:
-            embed.set_image(url=None)
+            # No files? just update the embed
             await interaction.response.edit_message(embed=embed, view=self, attachments=[])
     
+    # Make sure only the user who ran the command can navigate the pages
     async def next_page(self, interaction):
         if interaction.user.id != self.author_id:
             await interaction.response.send_message("Only the command user can navigate pages.", ephemeral=True)
@@ -159,16 +161,15 @@ class PaginationView(View):
             
         self.current_page += 1
         self.update_buttons()
-
         embed = self.pages[self.current_page]
-        image_path = self.image_files[self.current_page]
 
-        if image_path:
+        if self.current_page < len(self.image_files) and self.image_files[self.current_page]:
+            image_path = self.image_files[self.current_page]
             file = discord.File(image_path, filename=os.path.basename(image_path))
             embed.set_image(url=f"attachment://{os.path.basename(image_path)}")
             await interaction.response.edit_message(embed=embed, view=self, attachments=[file])
         else:
-            await interaction.response.edit_message(embed=self.pages[self.current_page], view=self, attachments=[])
+            await interaction.response.edit_message(embed=embed, view=self, attachments=[])
 
 @bot.tree.command(name="interactive_quests", description="Show quests with interactive pagination")
 async def interactive_quests(
@@ -199,7 +200,7 @@ async def interactive_quests(
 
     total_quests = len(quests)
     total_pages = (total_quests + page_size - 1) // page_size
-    
+
     for page_num in range(total_pages):
         start_idx = page_num * page_size
         end_idx = min(start_idx + page_size, total_quests)
@@ -209,10 +210,9 @@ async def interactive_quests(
             title=f"Monster Hunter Quests",
             color=0x0080ff
         )
-        
-        # Add quests as fields (as in previous example)
+
         for quest in page_quests:
-            # Format fields as before
+            
             new_badge = "🆕  " if quest.get("is_new", False) else ""
             title = f"{new_badge}{quest.get('title')} ({quest.get('difficulty')})\n\u200B"
             value = (
@@ -268,4 +268,68 @@ async def interactive_quests(
     else:
         await interaction.followup.send(embed=pages[0], view=view)
 
-bot.run(os.environ['DISC_TOKEN'])
+@bot.tree.command(name="weak", description="Quickly show monster weaknesses")
+async def weakness(
+    interaction: discord.Interaction,
+    monster: Optional[str] = None,
+    page_size: Optional[int] = 5
+):
+    await interaction.response.defer()
+
+    with open('monster_weaknesses.json', 'r') as file:
+        mappings = json.load(file)
+
+    if monster:
+        monster_lower = monster.lower()
+        found = False
+        embed = discord.Embed(
+            title=f"Monster Weakness Guide",
+            color=0x0080ff
+        )
+        
+        for k, v in mappings.items():
+            if monster_lower in v.lower():
+                embed.add_field(name=v.split(' ')[0], value=v, inline=False)
+                found = True
+                
+        if not found:
+            embed.description = f"No monster matching '{monster}' found."
+        
+        return await interaction.followup.send(embed=embed)
+
+    # Since mappings comes in as a dict, we need a list of tuples
+    mapping_list = list(mappings.items())
+    total_mappings = len(mapping_list)
+    total_pages = (total_mappings + page_size - 1) // page_size
+    pages = []
+    files = []
+
+    total_mappings = len(mapping_list)
+    total_pages = (total_mappings + page_size - 1) // page_size
+    
+    for page_num in range(total_pages):
+        start_idx = page_num * page_size
+        end_idx = min(start_idx + page_size, total_mappings)
+        page_mappings = mapping_list[start_idx:end_idx]
+    
+        embed = discord.Embed(
+        title=f"Monster Weakness Guide",
+        color=0x0080ff
+        )
+
+        # Iterate through touples in the page_mappings which is a slice of mapping_list to get the key and value
+        for k,v in page_mappings:
+            embed.add_field(name=f"{k}:{v}", value="", inline=False)
+
+        # Append the embed
+        pages.append(embed)
+        files.append(None)
+    
+    # If pages is empty, return
+    if not pages:
+        return await interaction.followup.send("No monster data available.")
+
+    # Sending files but we don't have any in this case
+    view = PaginationView(pages, files, interaction.user.id)
+    await interaction.followup.send(embed=pages[0], view=view)
+bot.run(os.getenv('DISC_TOKEN'))
