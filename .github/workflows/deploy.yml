@@ -58,10 +58,11 @@ jobs:
             fi
 
             cd $DEPLOY_DIR
-            docker-compose down -v
+            docker-compose down
             docker-compose build --no-cache
-            docker-compose up -d
-            docker system prune -f
+            docker compose --env-file .env.dev up -d
+            docker compose --env-file .env.prod up -d
+            docker system prune --filter "until=24h" -f
           EOF
 
       - run: echo "SUCCESS!!! This job's status is ${{ job.status }}."
