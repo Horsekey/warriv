@@ -319,7 +319,7 @@ async def weakness(
 
         # Iterate through touples in the page_mappings which is a slice of mapping_list to get the key and value
         for k,v in page_mappings:
-            embed.add_field(name=f"{k}' '{v}", value="", inline=False)
+            embed.add_field(name=f"{k} {v}", value="", inline=False)
 
         # Append the embed
         pages.append(embed)
