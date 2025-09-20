@@ -1,0 +1,212 @@
+[{
+  "id": 1,
+  "name": "hero_inferno"
+},
+{
+  "id": 2,
+  "name": "hero_gigawatt"
+},
+{
+  "id": 3,
+  "name": "hero_hornet"
+},
+{
+  "id": 4,
+  "name": "hero_ghost"
+},
+{
+  "id": 6,
+  "name": "hero_atlas"
+},
+{
+  "id": 7,
+  "name": "hero_wraith"
+},
+{
+  "id": 8,
+  "name": "hero_forge"
+},
+{
+  "id": 10,
+  "name": "hero_chrono"
+},
+{
+  "id": 11,
+  "name": "hero_dynamo"
+},
+{
+  "id": 12,
+  "name": "hero_kelvin"
+},
+{
+  "id": 13,
+  "name": "hero_haze"
+},
+{
+  "id": 14,
+  "name": "hero_astro"
+},
+{
+  "id": 15,
+  "name": "hero_bebop"
+},
+{
+  "id": 16,
+  "name": "hero_nano"
+},
+{
+  "id": 17,
+  "name": "hero_orion"
+},
+{
+  "id": 18,
+  "name": "hero_krill"
+},
+{
+  "id": 19,
+  "name": "hero_shiv"
+},
+{
+  "id": 20,
+  "name": "hero_tengu"
+},
+{
+  "id": 21,
+  "name": "hero_kali"
+},
+{
+  "id": 25,
+  "name": "hero_warden"
+},
+{
+  "id": 27,
+  "name": "hero_yamato"
+},
+{
+  "id": 31,
+  "name": "hero_lash"
+},
+{
+  "id": 35,
+  "name": "hero_viscous"
+},
+{
+  "id": 38,
+  "name": "hero_gunslinger"
+},
+{
+  "id": 39,
+  "name": "hero_yakuza"
+},
+{
+  "id": 47,
+  "name": "hero_tokamak"
+},
+{
+  "id": 48,
+  "name": "hero_wrecker"
+},
+{
+  "id": 49,
+  "name": "hero_rutger"
+},
+{
+  "id": 50,
+  "name": "hero_synth"
+},
+{
+  "id": 51,
+  "name": "hero_thumper"
+},
+{
+  "id": 52,
+  "name": "hero_mirage"
+},
+{
+  "id": 53,
+  "name": "hero_slork"
+},
+{
+  "id": 54,
+  "name": "hero_cadence"
+},
+{
+  "id": 56,
+  "name": "hero_bomber"
+},
+{
+  "id": 57,
+  "name": "hero_shieldguy"
+},
+{
+  "id": 58,
+  "name": "hero_viper"
+},
+{
+  "id": 59,
+  "name": "hero_vandal"
+},
+{
+  "id": 60,
+  "name": "hero_magician"
+},
+{
+  "id": 61,
+  "name": "hero_trapper"
+},
+{
+  "id": 62,
+  "name": "hero_operative"
+},
+{
+  "id": 63,
+  "name": "hero_vampirebat"
+},
+{
+  "id": 64,
+  "name": "hero_drifter"
+},
+{
+  "id": 65,
+  "name": "hero_priest"
+},
+{
+  "id": 66,
+  "name": "hero_frank"
+},
+{
+  "id": 67,
+  "name": "hero_bookworm"
+},
+{
+  "id": 68,
+  "name": "hero_boho"
+},
+{
+  "id": 69,
+  "name": "hero_doorman"
+},
+{
+  "id": 70,
+  "name": "hero_skyrunner"
+},
+{
+  "id": 71,
+  "name": "hero_swan"
+},
+{
+  "id": 72,
+  "name": "hero_punkgoat"
+},
+{
+  "id": 73,
+  "name": "hero_druid"
+},
+{
+  "id": 74,
+  "name": "hero_graf"
+},
+{
+  "id": 75,
+  "name": "hero_fortuna"
+}]
