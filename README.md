@@ -26,4 +26,11 @@ docker run $TAG
 
 Adding db functionality
 Adding command for upcoming features
+Added basic utilities that can be used within every command
+Refactored bot runner design to support slash commands
 
+---
+
+## Workflow
+
+To create a new command for the bot, copy the template_mmmFood.py, name it `<game>_<command>`, and change the command name and description to whatever you want. Under the async function, you will be able to put the logic for your new command. Use the utilities in the `util` folder to help speed up development so you can easily add pagination, connect to a database, or get JSON back from an API. 
