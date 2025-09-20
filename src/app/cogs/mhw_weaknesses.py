@@ -12,13 +12,14 @@ class Weak(commands.Cog):
 
     @app_commands.command(name="weak", description="Quickly show monster weaknesses")
     async def weakness(
+        self,
         interaction: discord.Interaction,
         monster: Optional[str] = None,
         page_size: Optional[int] = 5
     ):
         await interaction.response.defer(ephemeral=True)
 
-        with open('monster_weaknesses.json', 'r') as file:
+        with open('mock_data/json/monster_weaknesses.json', 'r') as file:
             mappings = json.load(file)
         
         if monster:

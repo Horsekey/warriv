@@ -13,6 +13,7 @@ class InteractiveQuests(commands.Cog):
 
     @app_commands.command(name="interactive_quests", description="Show quests with interactive pagination")
     async def interactive_quests(
+        self,
         interaction: discord.Interaction,
         difficulty: Optional[str] = None,
         show_new_only: Optional[bool] = False,
